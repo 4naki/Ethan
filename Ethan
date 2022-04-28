@@ -72,7 +72,7 @@ if (first()) {
     Leg_Rotations = array(
         #-- idle --
         #right, left
-        -3,2,
+        -5,3,
         #-- crouch --
         #right, left
         -9,4
@@ -81,10 +81,10 @@ if (first()) {
     Leg_Positions = array(
         #-- idle --
         #right, left
-        0,0,
+        -0.8,0.8,
         #-- crouch --
         #right, left
-        0,0
+        -12,12
     )
     
     Mech_gaits = table(
@@ -340,8 +340,8 @@ if (first()) {
     
     Mech_vel = ((((Base:vel()*(1/(1+(Sprint*StepDistanceRunReduceMult))))*vec(1,1,0))*0.0045)*min(Dir:length(),Mech_speed)*(StepDistance/100)) + Mech_Vel_Y2
     
-    Ranger_Left_Front = rangerOffset((Mech_height)*2,rangerOffset(Mech_pos,toWorld(Left_p_foot+(vec(1+(12*Duck),0,0)*clamp(1-(Dir:length()*0.01),0,1)),Ang,Mech_pos,Mech_ang) + Left_p_move):position(),Down)
-    Ranger_Right_Front = rangerOffset((Mech_height)*2,rangerOffset(Mech_pos,toWorld(Right_p_foot+(vec(-1-(12*Duck),0,0)*clamp(1-(Dir:length()*0.01),0,1)),Ang,Mech_pos,Mech_ang) + Right_p_move):position(),Down)
+    Ranger_Right_Front = rangerOffset((Mech_height)*2,rangerOffset(Mech_pos,toWorld(Right_p_foot+(vec(Leg_Positions[1,number]+(Leg_Positions[3,number]*Duck),0,0)*clamp(1-(Dir:length()*0.01),0,1)),Ang,Mech_pos,Mech_ang) + Right_p_move):position(),Down)
+    Ranger_Left_Front = rangerOffset((Mech_height)*2,rangerOffset(Mech_pos,toWorld(Left_p_foot+(vec(Leg_Positions[2,number]+(Leg_Positions[4,number]*Duck),0,0)*clamp(1-(Dir:length()*0.01),0,1)),Ang,Mech_pos,Mech_ang) + Left_p_move):position(),Down)
         
     On_Ground = Ranger_Left_Front:hit()&Ranger_Right_Front:hit()
     
