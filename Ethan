@@ -11,8 +11,6 @@
 #-- feet variables
 @persist [Left_a_real]:angle [Left_ent]:entity [Left_groundz Left_state Left_stepz Left_time] [Left_a_last Left_a_next]:quaternion [Left_p_foot Left_p_last Left_p_move Left_p_next Left_p_real]:vector
 @persist [Right_a_real]:angle [Right_ent]:entity [Right_groundz Right_state Right_stepz Right_time] [Right_a_last Right_a_next]:quaternion [Right_p_foot Right_p_last Right_p_move Right_p_next Right_p_real]:vector
-@persist [RL_a_real]:angle [RL_ent]:entity [RL_groundz RL_state RL_stepz RL_time] [RL_a_last RL_a_next]:quaternion [RL_p_foot RL_p_last RL_p_move RL_p_next RL_p_real]:vector
-@persist [RR_a_real]:angle [RR_ent]:entity [RR_groundz RR_state RR_stepz RR_time] [RR_a_last RR_a_next]:quaternion [RR_p_foot RR_p_last RR_p_move RR_p_next RR_p_real]:vector
 
 #-- ik variables
 @persist LengthA LengthB
@@ -93,15 +91,11 @@ if (first()) {
         "walk" = array(
             0.8,35,   #cycle rate,speed
             0.0,0.5, #fl start,length
-            0.5,0.5, #fr start,length
-            0.5,0.5, #rl start,length
-            0.5,0.5  #rr start,length
+            0.5,0.5 #fr start,length
         ),
-        "gallop" = array(
+        "run" = array(
             1.2,55,
             0.0,0.65,
-            0.5,0.65,
-            0.5,0.65,
             0.5,0.65
         )
     )
@@ -291,7 +285,7 @@ if (first()) {
         }
     }
     
-    Mech_pos = Base:toWorld(vec(0,0,0))#(FL_p_real + FR_p_real + RL_p_real + RR_p_real)/4 - Down*Mech_height
+    Mech_pos = Base:toWorld(vec(0,0,0))
     
     if(Active){
         
@@ -529,7 +523,7 @@ if (first()) {
         Mech_gait_transition = 0
         Mech_gait_last = Mech_gait_next
         if (Sprint) {
-            Mech_gait_next = Mech_gaits["gallop",array]
+            Mech_gait_next = Mech_gaits["run",array]
         } else { 
             Mech_gait_next = Mech_gaits["walk",array]
         }
