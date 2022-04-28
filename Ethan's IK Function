@@ -1,0 +1,23 @@
+@name ethan ik function
+#-- Creator: Shadowscion & ClockEFFX
+
+if(first()){
+    function number icos(A, B, C) {
+        return acos((A^2 + B^2 - C^2) / (2*A*B))    
+    }
+    
+    function ik(Base2:entity, NBase, NHipA, NHipB, NKnee, NFoot, LengthA, LengthB, Base:entity, Target:vector, Ground, Inverted, D) {
+        local AxisWorld = Target - holoEntity(NHipA):pos()
+        local AxisLocal = holoEntity(NBase):toLocalAxis(AxisWorld)
+        
+        holoAng(NBase, Base2:toWorld(ang(0,D,0)))
+        
+        holoAng(NHipA, holoEntity(NBase):toWorld(ang(0, 0, atan(AxisLocal:z(), AxisLocal:y()) + Inverted)))
+        local AxisLocal = holoEntity(NHipA):toLocalAxis(AxisWorld)
+        local Distance = min(AxisLocal:length(), LengthA + LengthB)
+        
+        holoAng(NHipB, holoEntity(NHipA):toWorld(ang(atan(-AxisLocal:x(), AxisLocal:z()) + icos(Distance, LengthA, LengthB), 180, 0)))
+        holoAng(NKnee, holoEntity(NHipB):toWorld(ang(icos(LengthB, LengthA, Distance) + 180, 0, 0)))
+        holoAng(NFoot, Base2:toWorld(ang(0,D,0)))
+    }
+}
