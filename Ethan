@@ -126,14 +126,14 @@ if (first()) {
     
     BonesVisible = 0
 
-    for (I = 1,5) {
+    for (I = 1,3) {
         holoCreate(I)
         holoModel(I,"models/sprops/misc/axis_plane.mdl")
-        holoAlpha(I,BonesVisible)
+        holoAlpha(I,255*BonesVisible)
     }
-    holoParent(5,Base)
-    holoPos(5,Base:toWorld(vec(0,0,0)))
-    holoAng(5,Base:toWorld(ang(0,0,0)))
+    holoParent(3,Base)
+    holoPos(3,Base:toWorld(vec(0,0,0)))
+    holoAng(3,Base:toWorld(ang(0,0,0)))
     
     Left_ent = holoEntity(1)
     Right_ent = holoEntity(2)
@@ -145,9 +145,9 @@ if (first()) {
     #front right
     
     holoCreate(6,Thigh_R:toWorld(vec(0,0,0)),vec(0),Thigh_R:toWorld(ang(0,0,0)),vec(255),"cube")
-    holoPos(6,holoEntity(5):toWorld(Leg_Pos_Offset))
-    holoAng(6,holoEntity(5):toWorld(ang(0,0,0)))
-    holoParent(6,holoEntity(5))
+    holoPos(6,holoEntity(3):toWorld(Leg_Pos_Offset))
+    holoAng(6,holoEntity(3):toWorld(ang(0,0,0)))
+    holoParent(6,holoEntity(3))
     
     holoCreate(7,Thigh_R:toWorld(vec(0,0,0)),vec(0),Thigh_R:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Thigh_R:children()
@@ -175,9 +175,9 @@ if (first()) {
     #front left
     
     holoCreate(10,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
-    holoPos(10,holoEntity(5):toWorld(Leg_Pos_Offset*vec(1,-1,1)))
-    holoAng(10,holoEntity(5):toWorld(ang(0,0,0)))
-    holoParent(10,holoEntity(5))
+    holoPos(10,holoEntity(3):toWorld(Leg_Pos_Offset*vec(1,-1,1)))
+    holoAng(10,holoEntity(3):toWorld(ang(0,0,0)))
+    holoParent(10,holoEntity(3))
     
     holoCreate(11,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Thigh_L:children()
@@ -228,14 +228,14 @@ if (first()) {
     }
 
     holoCreate(26)
-    holoParent(26,holoEntity(5))
+    holoParent(26,holoEntity(3))
     holoPos(26,holoEntity(6):toWorld(vec(0,0,0)))
-    holoAng(26,holoEntity(5):toWorld(ang(0,0,0)))
+    holoAng(26,holoEntity(3):toWorld(ang(0,0,0)))
     
     holoCreate(27)
-    holoParent(27,holoEntity(5))
+    holoParent(27,holoEntity(3))
     holoPos(27,holoEntity(10):toWorld(vec(0,0,0)))
-    holoAng(27,holoEntity(5):toWorld(ang(0,0,0)))
+    holoAng(27,holoEntity(3):toWorld(ang(0,0,0)))
     
     for(I=26,28){
         holoAlpha(I,0)
@@ -250,7 +250,7 @@ if (first()) {
     #ifdef httpRequest(string)
         Link = "https://github.com/4naki/Ethan/blob/main/Ethan"
         VersionCheckLink = "https://raw.githubusercontent.com/4naki/Ethan/main/Version%20Check"
-        Version = "1.0"
+        Version = "1.1"
         
         runOnHTTP(1)
         if(Link!=""){
@@ -268,6 +268,10 @@ if (first()) {
     
     
 }elseif (clk("update")) {
+    
+    Foot_R:propFreeze(0)
+    Foot_L:propFreeze(0)
+    
     #-- sim
     timer("update",60)
     
@@ -393,10 +397,10 @@ if (first()) {
     RotationLeft = ((Leg_Rotations[2,number]*clamp(1-(Dir:length()*0.01),0,1))+Leg_Rotations[4,number]*Duck)
     
     #right leg
-    ik(Base, 26, 6, 7, 8, 22, LengthA, LengthB, holoEntity(6), Ent2Pos, On_Ground, 90, RotationRight*!Editmode)
+    ik(Base, 26, 6, 7, 8, 22, LengthA, LengthB, holoEntity(6), Ent2Pos, On_Ground, 90, RotationRight*!Editmode,(Right_a_real*ang(1,0,1)))
     
     #left leg
-    ik(Base, 27, 10, 11, 12, 23, LengthA, LengthB, holoEntity(10), Ent1Pos, On_Ground, 90, RotationLeft*!Editmode)
+    ik(Base, 27, 10, 11, 12, 23, LengthA, LengthB, holoEntity(10), Ent1Pos, On_Ground, 90, RotationLeft*!Editmode,(Left_a_real*ang(1,0,1)))
     
     if(!Editmode){
     
