@@ -263,7 +263,7 @@ if (first()) {
     
     #ifdef httpRequest(string)
         Link = "https://github.com/4naki/Ethan/blob/main/Ethan"
-        VersionCheckLink = "https://github.com/4naki/Ethan/blob/main/Version%20Check"
+        VersionCheckLink = "https://raw.githubusercontent.com/4naki/Ethan/main/Version%20Check"
         Version = "1.0"
         
         runOnHTTP(1)
