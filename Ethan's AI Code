@@ -20,10 +20,6 @@ if(first()){
     
     CamControllerMode=1
     CanJump=0
-    
-    holoCreate(1)
-    holoPos(1,entity():pos())
-    holoAlpha(1,0)
 }
 
 LS=owner():lastSaid():explode(" ")
