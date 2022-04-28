@@ -20,4 +20,19 @@ if(first()){
         holoAng(NKnee, holoEntity(NHipB):toWorld(ang(icos(LengthB, LengthA, Distance) + 180, 0, 0)))
         holoAng(NFoot, FootAng+Base:toWorld(ang(0,D,0)))
     }
+    
+    function hand_ik(NHip, NKnee, NFoot, LengthA, LengthB, Base:entity, Target:vector, HandAng:angle, ShoulderAng:angle) {
+        local Origin = holoEntity(NHip):pos()
+        local AxisLocal = Base:toLocalAxis(Target - Origin)
+
+        #local AxisAngle = AxisLocal:toAngle():setRoll(-bearing(Target, Base:angles(), Origin)) #-- forward knee
+        local AxisAngle = AxisLocal:toAngle():setRoll(-bearing(Origin, Base:angles()+ShoulderAng, Target)) #-- reverse knee
+
+        local LengthC = min(AxisLocal:length(), LengthA + LengthB)
+        local AxisQuat = quat(AxisAngle) * qRotation(vec(0, 1, 0), 90 + icos(LengthC, LengthA, LengthB))
+        
+        holoAng(NHip, Base:toWorld(AxisQuat:toAngle():rotateAroundAxis(vec(0,1,0),0)))
+        holoAng(NKnee, holoEntity(NHip):toWorld(ang(icos(LengthB, LengthA, LengthC) + 180, 0, 0)))
+        holoAng(NFoot, HandAng)
+    }
 }
