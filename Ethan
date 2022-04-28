@@ -2,8 +2,13 @@
 @inputs Base:entity Seat:entity CamAng:angle W2 S2 Shift2 Crouch2 CamAng2:angle
 @outputs CamPos:vector CamDistance Active Fire
 
-#-- front legs bones
+#-- legs bones
 @inputs [Thigh_R Thigh_L Leg_R Leg_L Foot_R Foot_L]:entity
+#-- torso bones
+@inputs [Spine Head]:entity
+#-- arm bones
+@inputs [Upper_Arm_Right Forearm_Right Hand_Right]:entity
+@inputs [Upper_Arm_Left Forearm_Left Hand_Left]:entity
 #-- core variables
 @persist [Time_delta Time_current] [Down Left]:vector [Ang]:angle Inertia:angle Mass CamPos:vector CamDistance Active A3 Editmode Duck
 #-- mech variables
@@ -13,7 +18,7 @@
 @persist [Right_a_real]:angle [Right_ent]:entity [Right_groundz Right_state Right_stepz Right_time] [Right_a_last Right_a_next]:quaternion [Right_p_foot Right_p_last Right_p_move Right_p_next Right_p_real]:vector
 
 #-- ik variables
-@persist LengthA LengthB
+@persist LengthA LengthB Hand_Length_A Hand_Length_B
 
 #-- cam stuff
 @persist ThirdPerson [ThirdPersonPos FirstPersonPos]:vector ThirdPersonDistance FirstPersonDistance
@@ -54,6 +59,9 @@ if (first()) {
     
     Thigh_Length = 16
     Calf_Length = 18.15
+    
+    Upper_Arm_Length = 10.5
+    Forearm_Length = 10.5
     
     Mech_height = 55.6
     Leg_Pos_Offset = vec(0,-5.6,-2)
@@ -102,6 +110,9 @@ if (first()) {
     
     LengthA = Thigh_Length
     LengthB = Calf_Length
+    
+    Hand_Length_A = Upper_Arm_Length
+    Hand_Length_B = Forearm_Length
     
     Mech_gait_last = Mech_gaits["walk",array]
     Mech_gait_next = Mech_gaits["walk",array]
@@ -226,7 +237,103 @@ if (first()) {
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Foot_L)
     }
-
+    
+    #torso
+    holoCreate(14,Spine:toWorld(vec(0,0,0)),vec(0),Spine:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Spine:children()
+    rangerFilter(Children)
+    Spine:parentTo(holoEntity(14))
+    holoPos(14,holoEntity(3):toWorld(vec(-0.8,0,3)))
+    holoAng(14,holoEntity(3):toWorld(ang(0,0,0)))
+    holoParent(14,holoEntity(3))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Spine)
+    }
+    
+    #upper arm right
+    holoCreate(15,Upper_Arm_Right:toWorld(vec(0,0,0)),vec(0),Upper_Arm_Right:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Upper_Arm_Right:children()
+    rangerFilter(Children)
+    Upper_Arm_Right:parentTo(holoEntity(15))
+    holoPos(15,holoEntity(14):toWorld(vec(-1,-9,15)))
+    holoAng(15,holoEntity(14):toWorld(ang(0,0,90)))
+    holoParent(15,holoEntity(14))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Upper_Arm_Right)
+    }
+    
+    #upper arm left
+    holoCreate(16,Upper_Arm_Left:toWorld(vec(0,0,0)),vec(0),Upper_Arm_Left:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Upper_Arm_Left:children()
+    rangerFilter(Children)
+    Upper_Arm_Left:parentTo(holoEntity(16))
+    holoPos(16,holoEntity(14):toWorld(vec(-1,9,15)))
+    holoAng(16,holoEntity(14):toWorld(ang(0,0,-90)))
+    holoParent(16,holoEntity(14))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Upper_Arm_Left)
+    }
+    
+    #forearm right
+    holoCreate(17,Forearm_Right:toWorld(vec(0,0,0)),vec(0),Forearm_Right:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Forearm_Right:children()
+    rangerFilter(Children)
+    Forearm_Right:parentTo(holoEntity(17))
+    holoPos(17,holoEntity(15):toWorld(vec(0,0,Hand_Length_A)))
+    holoAng(17,holoEntity(15):toWorld(ang(0,0,0)))
+    holoParent(17,holoEntity(15))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Forearm_Right)
+    }
+    
+    #forearm left
+    holoCreate(18,Forearm_Left:toWorld(vec(0,0,0)),vec(0),Forearm_Left:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Forearm_Left:children()
+    rangerFilter(Children)
+    Forearm_Left:parentTo(holoEntity(18))
+    holoPos(18,holoEntity(16):toWorld(vec(0,0,Hand_Length_A)))
+    holoAng(18,holoEntity(16):toWorld(ang(0,0,0)))
+    holoParent(18,holoEntity(16))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Forearm_Left)
+    }
+    
+    #hand right
+    holoCreate(19,Hand_Right:toWorld(vec(0,0,0)),vec(0),Hand_Right:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Hand_Right:children()
+    rangerFilter(Children)
+    Hand_Right:parentTo(holoEntity(19))
+    holoPos(19,holoEntity(17):toWorld(vec(0,0,Hand_Length_B)))
+    holoAng(19,holoEntity(17):toWorld(ang(0,0,0)))
+    holoParent(19,holoEntity(17))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Hand_Right)
+    }
+    
+    #hand left
+    holoCreate(20,Hand_Left:toWorld(vec(0,0,0)),vec(0),Hand_Left:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Hand_Left:children()
+    rangerFilter(Children)
+    Hand_Left:parentTo(holoEntity(20))
+    holoPos(20,holoEntity(18):toWorld(vec(0,0,Hand_Length_B)))
+    holoAng(20,holoEntity(18):toWorld(ang(0,0,0)))
+    holoParent(20,holoEntity(18))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Hand_Left)
+    }
+    
+    #head
+    holoCreate(21,Head:toWorld(vec(0,0,0)),vec(0),Head:toWorld(ang(0,0,0)),vec(255),"cube")
+    local Children=Head:children()
+    rangerFilter(Children)
+    Head:parentTo(holoEntity(21))
+    holoPos(21,holoEntity(14):toWorld(vec(0,0,22)))
+    holoAng(21,holoEntity(14):toWorld(ang(0,0,0)))
+    holoParent(21,holoEntity(14))
+    for(I=1,Children:count()){
+        Children[I,entity]:parentTo(Head)
+    }
+    
     holoCreate(10)
     holoParent(10,holoEntity(3))
     holoPos(10,holoEntity(4):toWorld(vec(0,0,0)))
@@ -239,7 +346,7 @@ if (first()) {
     holoAng(11,holoEntity(3):toWorld(ang(0,0,0)))
     holoAlpha(11,0)
     
-    rangerFilter(array(Foot_R,Foot_L,Thigh_R,Thigh_L,Leg_R,Leg_L))
+    rangerFilter(array(Foot_R,Foot_L,Thigh_R,Thigh_L,Leg_R,Leg_L,Spine,Head,Upper_Arm_Left,Upper_Arm_Right,Forearm_Left,Forearm_Right,Hand_Left,Hand_Right,Base))
     
     timer("update",500)
     
@@ -248,7 +355,7 @@ if (first()) {
     #ifdef httpRequest(string)
         Link = "https://github.com/4naki/Ethan/blob/main/Ethan"
         VersionCheckLink = "https://raw.githubusercontent.com/4naki/Ethan/main/Version%20Check"
-        Version = "1.2"
+        Version = "1.5"
         
         runOnHTTP(1)
         if(Link!=""){
@@ -333,6 +440,14 @@ if (first()) {
     
     if(!Editmode){
     
+    A3+=randint(75,100)/100
+    
+    holoPos(4,holoEntity(3):toWorld(Leg_Pos_Offset+vec(0,0,+0.3-(1*clamp((-1.2+((Foot_R:pos()*vec(1,1,0)):distance(Base:pos()*vec(1,1,0))*0.3))*0.1,-1,1)))))
+    holoPos(5,holoEntity(3):toWorld((Leg_Pos_Offset*vec(1,-1,1))+vec(0,0,+0.3-(1*clamp((-1.2+((Foot_L:pos()*vec(1,1,0)):distance(Base:pos()*vec(1,1,0))*0.3))*0.1,-1,1)))))
+    
+    holoAng(14,holoEntity(3):toWorld(ang(2*sin(A3*1.2),0,1*sin(A3*0.82))+ang(clamp(CamAng3:pitch()*0.1,-5,5)+(10*Duck)+clamp(Base:velL():x()*0.05,-5,10),(-2*(clamp((sin(Right_time*180)-sin(Left_time*180))*abs(Base:velL():x()*0.01),-1,1)))+clamp(Base:velL():y()*0.1,-15,15),0)))
+    holoAng(21,ang(clamp(CamAng3:pitch(),-60,45),CamAng3:yaw(),0))
+    
     Dir = Base:vel()
     Mech_ang = Base:toWorld(ang(0,0,0))
     
@@ -361,9 +476,7 @@ if (first()) {
     
     Leg_Distance2 = (clamp((-11.38+Leg_Distance)*0.0022,0,0.5))
     
-    A3++
-    
-    Height_Adj = Mech_height*((0.95/(1+Leg_Distance2+clamp(Duck*0.9,0,1.1)))+(sin(A3*(randint(30,50)/10))*(0.001*sin(A3*(randint(5,15)/10)))))
+    Height_Adj = Mech_height*((0.95/(1+Leg_Distance2+clamp(Duck*0.9,0,1.1)))+(sin(A3)*(0.001*sin(A3))))
     
     local Distance = (Ranger_Left_Front:distance()+Ranger_Right_Front:distance())/2
     
@@ -374,8 +487,7 @@ if (first()) {
         local Damping_Force=(-Base:vel()*vec(0.2,0.2,0.5))*1
         local Move_Force=(((Movement_Direction)*Base_Speed)*(1+(Sprint*(Run_Speed_Mult*(1-(Crouch_Run_Speed_Reduce_Mult*Duck)))))*Speed_Mult)*(1-(Crouch_Speed_Reduce_Mult*Duck))
         local LegsPos=(holoEntity(1):pos()+holoEntity(2):pos())/2
-        local Sway=((Base:right()*(sin(A3*(randint(25,70)/10))))+(Base:forward()*(sin(A3*(randint(25,70)/10)))))*0.1
-        local Dynamic_Movement=((((((Base:pos()+LegsPos))/2)-Base:pos())*vec(1,1,0))+Sway)*(randint(25,50)/100)
+        local Dynamic_Movement=((((((Base:pos()+LegsPos))/2)-Base:pos())*vec(1,1,0)))*(randint(25,50)/100)
         Base:applyForce((Base:up()*Stand_Force*Mass)+(Damping_Force+Move_Force+Dynamic_Movement)*Mass)
     }
     if(changed(On_Ground)){
@@ -399,6 +511,18 @@ if (first()) {
     
     #left leg
     ik(Base, 11, 5, 8, 9, 13, LengthA, LengthB, holoEntity(11), Ent1Pos, On_Ground, 90, RotationLeft*!Editmode,(Left_a_real*ang(1,0,1)))
+    
+    #right hand
+    
+    RHand_Pos=(vec(-0.35,-12,-(Hand_Length_A+Hand_Length_B)*0.87/(1+(0.1*Sprint)+(0*Duck))):rotateAroundAxis(vec(0,1,0),(Base:toLocal(Foot_L:pos()):x()*clamp(Base:velL():x()*(0.01+(0.01*Sprint)),0.2,2)))):rotateAroundAxis(vec(1,0,0),!On_Ground*-45)
+    RHand_Ang=holoEntity(17):angles()
+    
+    hand_ik(15,17,19,Hand_Length_A,Hand_Length_B,Base,holoEntity(3):toWorld(vec(-1,0,16+abs(0.2*sin(A3*1.2)))+RHand_Pos),RHand_Ang,ang(0,0,0))
+    
+    LHand_Pos=(vec(-0.35,12,-(Hand_Length_A+Hand_Length_B)*0.87/(1+(0.1*Sprint)+(0.2*Duck))):rotateAroundAxis(vec(0,1,0),(Base:toLocal(Foot_R:pos()):x()*clamp(Base:velL():x()*(0.01+(0.01*Sprint)),0.2,2)))):rotateAroundAxis(vec(1,0,0),!On_Ground*-45)
+    LHand_Ang=holoEntity(18):angles()
+    
+    hand_ik(16,18,20,Hand_Length_A,Hand_Length_B,Base,holoEntity(3):toWorld(vec(-1,0,16+abs(0.2*sin(A3*1.05)))+LHand_Pos),LHand_Ang,ang(0,0,0))
     
     if(!Editmode){
     
