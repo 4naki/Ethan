@@ -27,7 +27,7 @@
 
 if (first()) {
     
-    Editmode = 0
+    Editmode = 1
     
     rangerHitEntities(!Editmode)
     
@@ -142,104 +142,102 @@ if (first()) {
     Down = vec(0,0,-1)
     Left = vec(0,1,0)
     
-    #front right
+    #right
+    
+    holoCreate(4,Thigh_R:toWorld(vec(0,0,0)),vec(0),Thigh_R:toWorld(ang(0,0,0)),vec(255),"cube")
+    holoPos(4,holoEntity(3):toWorld(Leg_Pos_Offset))
+    holoAng(4,holoEntity(3):toWorld(ang(0,0,0)))
+    holoParent(4,holoEntity(3))
     
     holoCreate(6,Thigh_R:toWorld(vec(0,0,0)),vec(0),Thigh_R:toWorld(ang(0,0,0)),vec(255),"cube")
-    holoPos(6,holoEntity(3):toWorld(Leg_Pos_Offset))
-    holoAng(6,holoEntity(3):toWorld(ang(0,0,0)))
-    holoParent(6,holoEntity(3))
-    
-    holoCreate(7,Thigh_R:toWorld(vec(0,0,0)),vec(0),Thigh_R:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Thigh_R:children()
     rangerFilter(Children)
-    Thigh_R:parentTo(holoEntity(7))
-    holoPos(7,holoEntity(6):toWorld(vec(0,0,0)))
-    holoAng(7,holoEntity(6):toWorld(ang(0,0,0)))
-    holoParent(7,holoEntity(6))
+    Thigh_R:parentTo(holoEntity(6))
+    holoPos(6,holoEntity(4):toWorld(vec(0,0,0)))
+    holoAng(6,holoEntity(4):toWorld(ang(0,0,0)))
+    holoParent(6,holoEntity(4))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Thigh_R)
     }
     
-    holoCreate(8,Leg_R:toWorld(vec(0,0,0)),vec(0),Leg_R:toWorld(ang(0,0,0)),vec(255),"cube")
+    holoCreate(7,Leg_R:toWorld(vec(0,0,0)),vec(0),Leg_R:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Leg_R:children()
     rangerFilter(Children)
-    Leg_R:parentTo(holoEntity(8))
-    holoPos(8,holoEntity(7):toWorld(vec(0,0,LengthA)))
-    holoAng(8,holoEntity(7):toWorld(ang(0,0,0)))
-    holoParent(8,holoEntity(7))
+    Leg_R:parentTo(holoEntity(7))
+    holoPos(7,holoEntity(6):toWorld(vec(0,0,LengthA)))
+    holoAng(7,holoEntity(6):toWorld(ang(0,0,0)))
+    holoParent(7,holoEntity(6))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Leg_R)
     }
     
     
-    #front left
+    #left
     
-    holoCreate(10,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
-    holoPos(10,holoEntity(3):toWorld(Leg_Pos_Offset*vec(1,-1,1)))
-    holoAng(10,holoEntity(3):toWorld(ang(0,0,0)))
-    holoParent(10,holoEntity(3))
+    holoCreate(5,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
+    holoPos(5,holoEntity(3):toWorld(Leg_Pos_Offset*vec(1,-1,1)))
+    holoAng(5,holoEntity(3):toWorld(ang(0,0,0)))
+    holoParent(5,holoEntity(3))
     
-    holoCreate(11,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
+    holoCreate(8,Thigh_L:toWorld(vec(0,0,0)),vec(0),Thigh_L:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Thigh_L:children()
     rangerFilter(Children)
-    Thigh_L:parentTo(holoEntity(11))
-    holoPos(11,holoEntity(10):toWorld(vec(0,0,0)))
-    holoAng(11,holoEntity(10):toWorld(ang(0,0,0)))
-    holoParent(11,holoEntity(10))
+    Thigh_L:parentTo(holoEntity(8))
+    holoPos(8,holoEntity(5):toWorld(vec(0,0,0)))
+    holoAng(8,holoEntity(5):toWorld(ang(0,0,0)))
+    holoParent(8,holoEntity(5))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Thigh_L)
     }
     
-    holoCreate(12,Leg_L:toWorld(vec(0,0,0)),vec(0),Leg_L:toWorld(ang(0,0,0)),vec(255),"cube")
+    holoCreate(9,Leg_L:toWorld(vec(0,0,0)),vec(0),Leg_L:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Leg_L:children()
     rangerFilter(Children)
-    Leg_L:parentTo(holoEntity(12))
-    holoPos(12,holoEntity(11):toWorld(vec(0,0,LengthA)))
-    holoAng(12,holoEntity(11):toWorld(ang(0,0,0)))
-    holoParent(12,holoEntity(11))
+    Leg_L:parentTo(holoEntity(9))
+    holoPos(9,holoEntity(8):toWorld(vec(0,0,LengthA)))
+    holoAng(9,holoEntity(8):toWorld(ang(0,0,0)))
+    holoParent(9,holoEntity(8))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Leg_L)
     }
     
     #feet
     
-    #front right
-    holoCreate(22,Foot_R:toWorld(vec(0,0,0)),vec(0),Foot_R:toWorld(ang(0,0,0)),vec(255),"cube")
+    #right
+    holoCreate(12,Foot_R:toWorld(vec(0,0,0)),vec(0),Foot_R:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Foot_R:children()
     rangerFilter(Children)
-    Foot_R:parentTo(holoEntity(22))
-    holoPos(22,holoEntity(8):toWorld(vec(0,0,LengthB)))
-    holoAng(22,holoEntity(8):toWorld(ang(0,0,0)))
-    holoParent(22,holoEntity(8))
+    Foot_R:parentTo(holoEntity(12))
+    holoPos(12,holoEntity(7):toWorld(vec(0,0,LengthB)))
+    holoAng(12,holoEntity(7):toWorld(ang(0,0,0)))
+    holoParent(12,holoEntity(7))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Foot_R)
     }
     
-    #front left
-    holoCreate(23,Foot_L:toWorld(vec(0,0,0)),vec(0),Foot_L:toWorld(ang(0,0,0)),vec(255),"cube")
+    #left
+    holoCreate(13,Foot_L:toWorld(vec(0,0,0)),vec(0),Foot_L:toWorld(ang(0,0,0)),vec(255),"cube")
     local Children=Foot_L:children()
     rangerFilter(Children)
-    Foot_L:parentTo(holoEntity(23))
-    holoPos(23,holoEntity(12):toWorld(vec(0,0,LengthB)))
-    holoAng(23,holoEntity(12):toWorld(ang(0,0,0)))
-    holoParent(23,holoEntity(12))
+    Foot_L:parentTo(holoEntity(13))
+    holoPos(13,holoEntity(9):toWorld(vec(0,0,LengthB)))
+    holoAng(13,holoEntity(9):toWorld(ang(0,0,0)))
+    holoParent(13,holoEntity(9))
     for(I=1,Children:count()){
         Children[I,entity]:parentTo(Foot_L)
     }
 
-    holoCreate(26)
-    holoParent(26,holoEntity(3))
-    holoPos(26,holoEntity(6):toWorld(vec(0,0,0)))
-    holoAng(26,holoEntity(3):toWorld(ang(0,0,0)))
+    holoCreate(10)
+    holoParent(10,holoEntity(3))
+    holoPos(10,holoEntity(4):toWorld(vec(0,0,0)))
+    holoAng(10,holoEntity(3):toWorld(ang(0,0,0)))
+    holoAlpha(10,0)
     
-    holoCreate(27)
-    holoParent(27,holoEntity(3))
-    holoPos(27,holoEntity(10):toWorld(vec(0,0,0)))
-    holoAng(27,holoEntity(3):toWorld(ang(0,0,0)))
-    
-    for(I=26,28){
-        holoAlpha(I,0)
-    }
+    holoCreate(11)
+    holoParent(11,holoEntity(3))
+    holoPos(11,holoEntity(5):toWorld(vec(0,0,0)))
+    holoAng(11,holoEntity(3):toWorld(ang(0,0,0)))
+    holoAlpha(11,0)
     
     rangerFilter(array(Foot_R,Foot_L,Thigh_R,Thigh_L,Leg_R,Leg_L))
     
@@ -250,7 +248,7 @@ if (first()) {
     #ifdef httpRequest(string)
         Link = "https://github.com/4naki/Ethan/blob/main/Ethan"
         VersionCheckLink = "https://raw.githubusercontent.com/4naki/Ethan/main/Version%20Check"
-        Version = "1.1"
+        Version = "1.2"
         
         runOnHTTP(1)
         if(Link!=""){
@@ -375,7 +373,7 @@ if (first()) {
         local Stand_Force=vec(0,0,((Height_Adj)*0.75)-Distance)*1.5
         local Damping_Force=(-Base:vel()*vec(0.2,0.2,0.5))*1
         local Move_Force=(((Movement_Direction)*Base_Speed)*(1+(Sprint*(Run_Speed_Mult*(1-(Crouch_Run_Speed_Reduce_Mult*Duck)))))*Speed_Mult)*(1-(Crouch_Speed_Reduce_Mult*Duck))
-        local LegsPos=(holoEntity(22):pos()+holoEntity(23):pos())/2
+        local LegsPos=(holoEntity(1):pos()+holoEntity(2):pos())/2
         local Sway=((Base:right()*(sin(A3*(randint(25,70)/10))))+(Base:forward()*(sin(A3*(randint(25,70)/10)))))*0.1
         local Dynamic_Movement=((((((Base:pos()+LegsPos))/2)-Base:pos())*vec(1,1,0))+Sway)*(randint(25,50)/100)
         Base:applyForce((Base:up()*Stand_Force*Mass)+(Damping_Force+Move_Force+Dynamic_Movement)*Mass)
@@ -397,10 +395,10 @@ if (first()) {
     RotationLeft = ((Leg_Rotations[2,number]*clamp(1-(Dir:length()*0.01),0,1))+Leg_Rotations[4,number]*Duck)
     
     #right leg
-    ik(Base, 26, 6, 7, 8, 22, LengthA, LengthB, holoEntity(6), Ent2Pos, On_Ground, 90, RotationRight*!Editmode,(Right_a_real*ang(1,0,1)))
+    ik(Base, 10, 4, 6, 7, 12, LengthA, LengthB, holoEntity(10), Ent2Pos, On_Ground, 90, RotationRight*!Editmode,(Right_a_real*ang(1,0,1)))
     
     #left leg
-    ik(Base, 27, 10, 11, 12, 23, LengthA, LengthB, holoEntity(10), Ent1Pos, On_Ground, 90, RotationLeft*!Editmode,(Left_a_real*ang(1,0,1)))
+    ik(Base, 11, 5, 8, 9, 13, LengthA, LengthB, holoEntity(11), Ent1Pos, On_Ground, 90, RotationLeft*!Editmode,(Left_a_real*ang(1,0,1)))
     
     if(!Editmode){
     
