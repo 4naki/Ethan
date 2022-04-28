@@ -147,7 +147,7 @@ if(UseAimPos|Follow|Here){
             TargetOverwrite=owner():aimPos()
         }
     }elseif(!Here){
-        TargetOverwrite=owner():pos()
+        TargetOverwrite=owner():pos()+vec(0,0,owner():height()/2)
     }
     #Acts like cam controller camAng()
     if((TargetOverwrite-Base:pos()):toAngle():pitch()<180.1){
