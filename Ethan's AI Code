@@ -20,6 +20,8 @@ if(first()){
     
     CamControllerMode=1
     CanJump=0
+    
+    UseAimPos=0
 }
 
 LS=owner():lastSaid():explode(" ")
